@@ -11,7 +11,7 @@ import 'centers_screen.dart' show centerFields;
 class CenterDetailScreen extends StatefulWidget {
   const CenterDetailScreen({super.key, required this.app, required this.user, required this.centerId});
   final AppDatabase app;
-  final Row user;
+  final DbRow user;
   final String centerId;
   @override
   State<CenterDetailScreen> createState() => _CenterDetailScreenState();
@@ -30,16 +30,16 @@ class _CenterDetailScreenState extends State<CenterDetailScreen> {
   }
 
   void _reload() {
-    _data = () async => {
+    _data = (() async => {
           'c': await repo.byId(widget.centerId),
           'staff': await repo.staffOf(widget.centerId),
           'equip': await repo.equipmentOf(widget.centerId),
           'tasks': await repo.tasksOf(widget.centerId),
-        }();
+        })();
     setState(() {});
   }
 
-  Future<void> _edit(Row c) async {
+  Future<void> _edit(DbRow c) async {
     final v = await showRecordForm(context, title: 'تعديل المركز', fields: centerFields, initial: c);
     if (v == null) return;
     await repo.save(v, id: widget.centerId);
@@ -54,7 +54,7 @@ class _CenterDetailScreenState extends State<CenterDetailScreen> {
     Navigator.pop(context);
   }
 
-  Future<void> _addStaff(Row c) async {
+  Future<void> _addStaff(DbRow c) async {
     final centers = await repo.all();
     if (!mounted) return;
     // المركز محدد مسبقاً؛ الإعلامي المضاف يظهر تلقائياً في قسم الكادر العام (نفس الجدول)
@@ -79,11 +79,11 @@ class _CenterDetailScreenState extends State<CenterDetailScreen> {
       future: _data,
       builder: (context, snap) {
         if (!snap.hasData) return const Scaffold(body: Center(child: CircularProgressIndicator()));
-        final c = snap.data!['c'] as Row?;
+        final c = snap.data!['c'] as DbRow?;
         if (c == null) return const Scaffold(body: EmptyState('المركز غير موجود'));
-        final staff = snap.data!['staff'] as List<Row>;
-        final equip = snap.data!['equip'] as List<Row>;
-        final tasks = snap.data!['tasks'] as List<Row>;
+        final staff = snap.data!['staff'] as List<DbRow>;
+        final equip = snap.data!['equip'] as List<DbRow>;
+        final tasks = snap.data!['tasks'] as List<DbRow>;
         return DefaultTabController(
           length: 4,
           child: Scaffold(

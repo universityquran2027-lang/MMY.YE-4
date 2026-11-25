@@ -45,7 +45,6 @@ class _TasksScreenState extends State<TasksScreen> {
     final role = Role.parse(widget.user['role']);
     if (!role.canEditOperations) return;
     final centers = await widget.app.db.query('centers', where: "status = 'active'", orderBy: 'serial');
-    final staff = await widget.app.db.query('media_staff', where: "status = 'active'", orderBy: 'serial');
     if (!mounted) return;
     if (centers.isEmpty) {
       toast(context, 'أضف مركزاً نشطاً أولاً.');

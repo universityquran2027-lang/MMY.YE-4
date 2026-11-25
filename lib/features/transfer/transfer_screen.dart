@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import '../../core/db/app_database.dart';
 import '../../core/permissions.dart';
-import '../../core/widgets.dart';
 import 'mmy_package.dart';
 
 class TransferScreen extends StatefulWidget {

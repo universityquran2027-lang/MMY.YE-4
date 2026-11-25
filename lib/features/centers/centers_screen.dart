@@ -24,7 +24,7 @@ const centerFields = [
 class CentersScreen extends StatefulWidget {
   const CentersScreen({super.key, required this.app, required this.user});
   final AppDatabase app;
-  final Row user;
+  final DbRow user;
   @override
   State<CentersScreen> createState() => _CentersScreenState();
 }
@@ -33,7 +33,7 @@ class _CentersScreenState extends State<CentersScreen> {
   late final repo = CentersRepository(widget.app, widget.user['id'] as String);
   late final role = Role.parse(widget.user['role']);
   String _q = '';
-  late Future<List<Row>> _rows = repo.list();
+  late Future<List<DbRow>> _rows = repo.list();
 
   void _reload() => setState(() => _rows = repo.list(q: _q));
 
@@ -63,7 +63,7 @@ class _CentersScreenState extends State<CentersScreen> {
         ]),
         const SizedBox(height: 12),
         Expanded(
-          child: FutureBuilder<List<Row>>(
+          child: FutureBuilder<List<DbRow>>(
             future: _rows,
             builder: (context, snap) {
               if (!snap.hasData) return const Center(child: CircularProgressIndicator());

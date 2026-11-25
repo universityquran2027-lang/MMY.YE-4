@@ -209,7 +209,7 @@ class MmyPackage {
     if (await file.length() > _maxPackageBytes) {
       throw const FormatException('الملف أكبر من الحد المسموح');
     }
-    var bytes = await file.readAsBytes();
+    List<int> bytes = await file.readAsBytes();
     final encrypted = bytes.length > 5 && List.generate(5, (i) => bytes[i]).join() == _magic.join();
     if (encrypted) {
       if (passphrase == null) throw const FormatException('الملف مشفّر ويحتاج عبارة سرية');

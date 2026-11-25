@@ -10,7 +10,7 @@ import 'staff_repository.dart';
 class StaffScreen extends StatefulWidget {
   const StaffScreen({super.key, required this.app, required this.user});
   final AppDatabase app;
-  final Row user;
+  final DbRow user;
   @override
   State<StaffScreen> createState() => _StaffScreenState();
 }
@@ -20,8 +20,8 @@ class _StaffScreenState extends State<StaffScreen> {
   late final role = Role.parse(widget.user['role']);
   String _q = '';
   String? _center, _status;
-  Future<List<Row>>? _rows;
-  List<Row> _centers = [];
+  Future<List<DbRow>>? _rows;
+  List<DbRow> _centers = [];
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class _StaffScreenState extends State<StaffScreen> {
         ]),
         const SizedBox(height: 12),
         Expanded(
-          child: FutureBuilder<List<Row>>(
+          child: FutureBuilder<List<DbRow>>(
             future: _rows,
             builder: (context, snap) {
               if (!snap.hasData) return const Center(child: CircularProgressIndicator());

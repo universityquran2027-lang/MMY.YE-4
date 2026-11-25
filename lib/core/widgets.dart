@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'permissions.dart';
 
 enum FieldType { text, phone, multiline, date, dropdown }
 
